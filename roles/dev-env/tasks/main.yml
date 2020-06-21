@@ -2,18 +2,18 @@
 - name: install packages
   apt:
     name:
-     - git
-     - cmake
-     - mono-complete
-     - npm
-     - python3-pip
-     - powerline
-     - fonts-powerline
-     - vim
-     - tmux
-     - zsh
+      - git
+      - cmake
+      - mono-complete
+      - npm
+      - python3-pip
+      - powerline
+      - fonts-powerline
+      - vim
+      - tmux
+      - zsh
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: install oh-my-zsh
   shell: sh -c "$(wget {{ zsh_url }} -0- "
@@ -22,12 +22,15 @@
   shell: chsh -s $(which zsh)
 
 - name: clone zsh syntax highlighting repo
-  git: 
-    repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.zsh-syntax-highlighting"'
+  git:
+    repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
     depth: 1
     dest: /home/"{{ ansible_user }}"
 
 - name: set default zshrc file
   copy:
     src: zshrc
-    dest: /home/"{$ansible_user}"/.zshrc
+    dest: /home/"{{ ansible_user }}"/.zshrc
+    mode: '0700'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
