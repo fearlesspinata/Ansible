@@ -16,7 +16,7 @@
     update_cache: true
 
 - name: install oh-my-zsh
-  shell: sh -c wget "{{ zsh_url }}" -0 -
+  shell: wget -O - "{{ zsh_url }}"
 
 - name: set zsh as default shell
   shell: chsh -s $(which zsh)
