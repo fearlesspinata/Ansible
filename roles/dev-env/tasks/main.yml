@@ -1,0 +1,28 @@
+---
+- name: install packages
+  apt:
+    name:
+     - git
+     - cmake
+     - mono-complete
+     - npm
+     - python3-pip
+     - powerline
+     - fonts-powerline
+     - vim
+     - tmux
+     - zsh
+    state: present
+    update_cache: yes
+
+- name: install oh-my-zsh
+  shell: sh -c "$(wget {{ zsh_url }} -0- "
+
+- name: set zsh as default shell
+  shell: chsh -s $(which zsh)
+
+- name: clone zsh syntax highlighting repo
+  git: 
+    repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.zsh-syntax-highlighting"'
+    depth: 1
+    dest: /home/"{{ ansible_user }}"
