@@ -16,7 +16,7 @@
     update_cache: true
 
 - name: install oh-my-zsh
-  shell: wget -O - "{{ zsh_url }}"
+  shell:  wget -O - "{{ zsh_url }}"
 
 - name: set zsh as default shell
   shell: chsh -s $(which zsh)
@@ -25,20 +25,20 @@
   git:
     repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
     depth: 1
-    dest: /home/"{{ ansible_user }}"
+    dest: /home/"{{ user }}"
 
 - name: set default zshrc file
   copy:
     src: zshrc
     dest: /home/"{{ ansible_user }}"/.zshrc
     mode: '0700'
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
 - name: set default tmux config file
   copy:
     src: tmux.conf
     dest: /home/"{{ ansible_user }}"/.tmux.conf
     mode: '0700'
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
