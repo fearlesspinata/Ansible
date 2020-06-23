@@ -25,20 +25,20 @@
   git:
     repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
     depth: 1
-    dest: /home/"{{ user }}"
+    dest: /home/{{ ansible_user }}
 
 - name: set default zshrc file
   copy:
     src: zshrc
-    dest: /home/"{{ ansible_user }}"/.zshrc
+    dest: /home/{{ ansible_user }}/.zshrc
     mode: '0700'
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
 
 - name: set default tmux config file
   copy:
     src: tmux.conf
     dest: /home/"{{ ansible_user }}"/.tmux.conf
     mode: '0700'
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
