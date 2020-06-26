@@ -38,7 +38,7 @@
 - name: set default tmux config file
   copy:
     src: tmux.conf
-    dest: /home/"{{ ansible_user }}"/.tmux.conf
+    dest: /home/{{ ansible_user }}/.tmux.conf
     mode: '0700'
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
