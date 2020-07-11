@@ -27,6 +27,11 @@
     path: ~/.oh-my-zsh
   register: stat_oh_my_zsh_result
 
+- name: check if .zsh-syntax-higlighting exists
+  stat:
+    path: ~/.zsh-syntax-highlighting
+  register: stat_zsh_syntax_result
+
 - name: clone oh-my-zsh repository
   git:
     repo={{ zsh_url }}
@@ -42,6 +47,7 @@
     repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
     depth: 1
     dest: /home/{{ ansible_user }}/.zsh-syntax-highlighting
+  when: not stat_zsh_syntax_results.stat.exists
 
 - name: set default zshrc file
   copy:
