@@ -15,9 +15,13 @@
     state: present
     update_cache: true
 
+- name: download the oh-my-zsh installer script
+  get_url:
+    url: "{{ zsh_url }}"
+    dest: /tmp/install.sh
+
 - name: install oh-my-zsh
-  command:  sh -c '$(wget -O - "{{ zsh_url }}")'
-  become: true
+  shell: /tmp/install.sh
 
 - name: set zsh as default shell
   shell: chsh -s $(which zsh)
