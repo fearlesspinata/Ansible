@@ -20,6 +20,7 @@
   get_url:
     url: "{{ zsh_url }}"
     dest: /tmp/install.sh
+    mode: 777
 
 - name: install oh-my-zsh
   shell: /tmp/install.sh
