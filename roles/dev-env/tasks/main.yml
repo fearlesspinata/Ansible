@@ -29,7 +29,7 @@
 
 - name: clone oh-my-zsh repository
   git:
-    repo={{ oh_my_zsh_url }}
+    repo={{ zsh_url }}
     dest=~/.oh-my-zsh
   when: not stat_oh_my_zsh_result.stat.exists
 
