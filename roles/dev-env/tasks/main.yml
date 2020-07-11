@@ -24,7 +24,6 @@
 
 - name: install oh-my-zsh
   shell: /tmp/install.sh
-  become: true
 
 - name: set zsh as default shell
   shell: chsh -s $(which zsh)
