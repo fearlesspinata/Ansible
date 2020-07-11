@@ -1,0 +1,150 @@
+" Core
+" Change map leader
+let mapleader=","
+" etc etc
+set encoding=utf-8
+set nocp
+set undofile
+set history=1000
+set undolevels=1000
+set title
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swp//
+set undodir=~/.vim/undo//
+set clipboard=unnamed
+set timeoutlen=200
+set ttimeoutlen=0
+
+" Visual Changes
+set list "show nonprinting chars (set with listchars)
+set listchars=eol:¬,extends:»,tab:▸\ ,trail:› "change eol/extend/tab/trail characters
+syntax enable "enable syntax highlighting
+
+" Enable folding
+set foldmethod=syntax " fold based on indent
+set foldnestmax=10 " deepest fold is 10 levels
+set nofoldenable " don't fold by default
+set foldlevel=1
+
+" search
+set ignorecase " case insensitive searching
+set smartcase " case-sensitive if expresson contains a capital letter
+set hlsearch
+set incsearch " set incremental search, like modern browsers
+set nolazyredraw " don't redraw while executing macros
+set magic " Set magic on, for regex
+set showmatch " show matching braces
+set mat=2 " how many tenths of a second to blink
+
+" adds line numbers
+set number
+
+" set vim colors
+set t_Co=256
+
+" colors
+set background=
+
+"always show powerline
+set laststatus=2
+
+" Behaviors / Hotkeys
+nnoremap ; :
+nnoremap ,w <C-w>
+nnoremap ,, <C-w><C-w>
+map SS :update<CR>
+map CC :bd<CR>
+map QQ :q!<CR>
+set pastetoggle=<F2>
+
+" jump to last cursor position on open
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" Format paragraphs
+" vmap Q gq
+" nmap Q gqap
+
+" Navigation
+" easier pane navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+" change initial split openings
+set splitright
+set splitbelow
+
+" makes backspace behave like other apps
+set backspace=indent,eol,start
+" required for Vundle
+filetype off
+" vundle plug-in manager
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" vundle plugins
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'fatih/vim-go'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'mhinz/vim-signify'
+Plugin 'nikvdp/ejs-syntax'
+Plugin 'pangloss/vim-javascript'
+Plugin 'pearofducks/ansible-vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'tmux-plugins/vim-tmux'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vundleVim/Vundle.vim'
+Plugin 'xuyuanp/nerdtree-git-plugin'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'nathanielc/vim-tickscript'
+call vundle#end()
+filetype plugin indent on "turn filetype back on
+
+colorscheme darkrobot
+set guifont=Droid\ Sans\ Mono\ Awesome\ 11
+
+"ctrlp, general ignore
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/node_modules
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
+let g:ctrlp_dotfiles=1
+let g:ctrlp_working_path_mode = 'ra'
+
+
+"go syntax highlighting
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+"nerdtree
+map <C-n> :NERDTreeToggle<CR>
+map ,n :NERDTreeToggle<CR>
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDTreeQuitOnOpen = 1
+let NERDTreeShowHidden = 1
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let NERDTreeIgnore = ['*/node_modules', 'node_modules']
+
+"vim ansible
+let g:ansible_attribute_highlight = "ab"
+let g:ansible_name_highlight = 'b'
+let g:ansible_extra_keywords_highlight = 1
+au BufNewFile,BufRead *.yaml,*.yml set filetype=yaml.ansible
+let g:loaded_syntastic_ansible_ansible_lint_checker = 0
+
+"vim airline
+let g:airline_theme='molokai'
+let g:airline_powerline_fonts = 1

@@ -67,3 +67,28 @@
     mode: '0700'
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+
+- name: create bundle directory in .vim directory
+  file:
+    path: ~/.vim/bundle
+    state: directory
+    mode: '0755'
+
+- name: check if vundle.vim exists
+  stat:
+    path: ~/.vim/bundle/Vundle.vim
+  register: stat_vundle_result
+
+- name: clone vundle repository
+  git:
+    repo={{ vundle_url }}
+    dest=~/.vim/bundle/Vundle.vim
+  when: not stat_vundle_result.stat.exists
+
+- name: copy vimrc file
+  copy:
+    src: vimrc
+    dest: /home/{{ ansible_user }}/.vimrc
+    mode: '0700'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
