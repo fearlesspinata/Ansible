@@ -17,6 +17,7 @@
 
 - name: install oh-my-zsh
   shell:  sh -c '$(wget -O - "{{ zsh_url }}")'
+  become: true
 
 - name: set zsh as default shell
   shell: chsh -s $(which zsh)
