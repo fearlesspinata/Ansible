@@ -40,7 +40,6 @@
 
 - name: set zsh as default shell
   shell: chsh -s $(which zsh)
-  become: true
 
 - name: clone zsh syntax highlighting repo
   git:
