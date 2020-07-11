@@ -20,23 +20,23 @@
 
 - name: Check if .zshrc exists
   stat:
-    path: ~/.zshrc
+    path: /home/{{ ansible_user }}/.zshrc
   register: stat_rc_result
 
 - name: check if .oh-my-zsh exists
   stat:
-    path: ~/.oh-my-zsh
+    path: /home/{{ ansible_user }}/.oh-my-zsh
   register: stat_oh_my_zsh_result
 
 - name: check if .zsh-syntax-higlighting exists
   stat:
-    path: ~/.zsh-syntax-highlighting
+    path: /home/{{ ansible_user }}/.zsh-syntax-highlighting
   register: stat_zsh_syntax_result
 
 - name: clone oh-my-zsh repository
   git:
     repo={{ zsh_url }}
-    dest=~/.oh-my-zsh
+    dest=/home/{{ ansible_user }}/.oh-my-zsh
   when: not stat_oh_my_zsh_result.stat.exists
 
 - name: set zsh as default shell for user
@@ -71,19 +71,19 @@
 
 - name: create bundle directory in .vim directory
   file:
-    path: ~/.vim/bundle
+    path: /home/{{ ansible_user }}/.vim/bundle
     state: directory
     mode: '0755'
 
 - name: check if vundle.vim exists
   stat:
-    path: ~/.vim/bundle/Vundle.vim
+    path: /home/{{ ansible_user }}/.vim/bundle/Vundle.vim
   register: stat_vundle_result
 
 - name: clone vundle repository
   git:
     repo={{ vundle_url }}
-    dest=~/.vim/bundle/Vundle.vim
+    dest=/home/{{ ansible_user }}/.vim/bundle/Vundle.vim
   when: not stat_vundle_result.stat.exists
 
 - name: copy vimrc file
