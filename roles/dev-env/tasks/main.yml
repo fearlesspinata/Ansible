@@ -47,7 +47,7 @@
     repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
     depth: 1
     dest: /home/{{ ansible_user }}/.zsh-syntax-highlighting
-  when: not stat_zsh_syntax_results.stat.exists
+  when: not stat_zsh_syntax_result.stat.exists
 
 - name: set default zshrc file
   copy:
