@@ -42,7 +42,7 @@
   become: true
   user:
     name: "{{ ansible_user }}"
-    shell: chsh -s $(which zsh)
+    shell: /bin/zsh
 
 - name: clone zsh syntax highlighting repo
   git:
