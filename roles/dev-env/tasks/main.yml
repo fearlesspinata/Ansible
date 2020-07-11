@@ -38,8 +38,11 @@
     dest=~/.oh-my-zsh
   when: not stat_oh_my_zsh_result.stat.exists
 
-- name: set zsh as default shell
-  shell: chsh -s $(which zsh)
+- name: set zsh as default shell for user
+  become: true
+  user:
+    name: "{{ ansible_user }}"
+    shell: chsh -s $(which zsh)
 
 - name: clone zsh syntax highlighting repo
   git:
