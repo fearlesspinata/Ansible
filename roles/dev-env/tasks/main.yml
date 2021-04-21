@@ -1,0 +1,95 @@
+---
+- name: install packages
+  become: true
+  apt:
+    name:
+      - git
+      - cmake
+      - mono-complete
+      - npm
+      - python3-pip
+      - powerline
+      - fonts-powerline
+      - vim
+      - tmux
+      - zsh
+    state: present
+    update_cache: true
+  tags: ['pkg_install']
+
+
+- name: Check if .zshrc exists
+  stat:
+    path: /home/{{ ansible_user }}/.zshrc
+  register: stat_rc_result
+
+- name: check if .oh-my-zsh exists
+  stat:
+    path: /home/{{ ansible_user }}/.oh-my-zsh
+  register: stat_oh_my_zsh_result
+
+- name: check if .zsh-syntax-higlighting exists
+  stat:
+    path: /home/{{ ansible_user }}/.zsh-syntax-highlighting
+  register: stat_zsh_syntax_result
+
+- name: clone oh-my-zsh repository
+  git:
+    repo={{ zsh_url }}
+    dest=/home/{{ ansible_user }}/.oh-my-zsh
+  when: not stat_oh_my_zsh_result.stat.exists
+
+- name: set zsh as default shell for user
+  become: true
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/zsh
+
+- name: clone zsh syntax highlighting repo
+  git:
+    repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
+    depth: 1
+    dest: /home/{{ ansible_user }}/.zsh-syntax-highlighting
+  when: not stat_zsh_syntax_result.stat.exists
+
+- name: set default zshrc file
+  copy:
+    src: zshrc
+    dest: /home/{{ ansible_user }}/.zshrc
+    mode: '0700'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  when: not stat_rc_result.stat.exists
+
+- name: set default tmux config file
+  copy:
+    src: tmux.conf
+    dest: /home/{{ ansible_user }}/.tmux.conf
+    mode: '0700'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: create bundle directory in .vim directory
+  file:
+    path: /home/{{ ansible_user }}/.vim/bundle
+    state: directory
+    mode: '0755'
+
+- name: check if vundle.vim exists
+  stat:
+    path: /home/{{ ansible_user }}/.vim/bundle/Vundle.vim
+  register: stat_vundle_result
+
+- name: clone vundle repository
+  git:
+    repo={{ vundle_url }}
+    dest=/home/{{ ansible_user }}/.vim/bundle/Vundle.vim
+  when: not stat_vundle_result.stat.exists
+
+- name: copy vimrc file
+  copy:
+    src: vimrc
+    dest: /home/{{ ansible_user }}/.vimrc
+    mode: '0700'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
